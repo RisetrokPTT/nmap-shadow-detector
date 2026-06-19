@@ -9,11 +9,32 @@ categories = {"discovery", "safe"}
 local stdnse = require "stdnse"
 local io = require "io"
 
+local baseline_path = stdnse.get_script_args("baseline") or "baseline.txt"
+
 portrule = function(host, port)
   return port.state == "open"
 end
 
 action = function(host, port)
-  -- Tu w przyszłości dodasz logikę porównywania z plikiem baseline.txt
-  return "Detected service on port " .. port.number .. " - POSSIBLE SHADOW IT!"
+  local file = io.open(baseline_path, "r")
+  
+  if not file then
+    return "Error: Could not open baseline file: " .. baseline_path
+  end
+
+  local current_entry = host.ip .. ":" .. port.number
+  local found = false
+
+  -- Przeszukiwanie pliku baseline
+  for line in file:lines() do
+    if line:find(current_entry) then
+      found = true
+      break
+    end
+  end
+  file:close()
+
+  if not found then
+    return stdnse.format_output(true, "ALERT: New service detected on port " .. port.number .. " (Not in baseline!)")
+  end
 end
