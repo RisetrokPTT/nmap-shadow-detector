@@ -22,16 +22,6 @@ A custom **Nmap Scripting Engine (NSE)** tool designed to monitor network infras
   ```
   nmap -p- --script shadow-it-detect.nse 192.168.1.0/24
   ```
-##Why use this?
-
-  In modern environments, unauthorized devices or services (Shadow IT) are a primary entry point for attackers. This tool acts as an automated "tripwire" for your network segments.
-  Roadmap
-
-    [ ] Add support for service version comparison.
-
-    [ ] Implement email/Slack alerts on detection.
-
-    [ ] Support for JSON-formatted baseline files.
 
 ## License
   This project is licensed under the Nmap Public Source License.
