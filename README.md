@@ -8,9 +8,16 @@ A custom **Nmap Scripting Engine (NSE)** tool designed to monitor network infras
 - **Security-First**: Perfect for automated compliance monitoring and infrastructure auditing.
 
 ## Installation
-  Locate your Nmap scripts directory (usually `/usr/share/nmap/scripts/` on Linux):
+1. Locate your Nmap scripts directory (usually `/usr/share/nmap/scripts/` on Linux):
    ```bash
+   git clone https://github.com/RisetrokPTT/nmap-shadow-detector.git
+   cd nmap-shadow-detector
+   ```
+2. Copy .NSE file to your nmap scripts folder
+   ```
    cp shadow-it-detect.nse /usr/share/nmap/scripts/
+3. Update nmaps script engine
+   ```
    nmap --script-updatedb
    ```
 ## Usage
