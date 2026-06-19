@@ -9,28 +9,27 @@ categories = {"discovery", "safe"}
 local stdnse = require "stdnse"
 local io = require "io"
 
--- Używamy prerule, aby baner wyświetlił się tylko raz na początku skanowania
+-- Symetryczny baner 3x3 z "kluczami"
 prerule = function()
-  local banner = [[
-          .---.
-         /  _  \
-        |  (_)  |
-         \  _  /
-      .-'   |   '-.
-     /   .-' '-.   \           
-    |   /       \   |
-    |  |   [!]   |  | 
-    |   \       /   |
-     \   '-. .-'   /
-      '-.   |   .-'
-         \  _  /
-        |  (_)  |
-         \  _  /
-          '---'
+  print([[
+              .---.
+             /  _  \
+            |  (_)  |
+             \  _  /
+          .-'   |   '-.
+    (.)  /   .-' '-.   \  (.)
+        |   /       \   |
+        |  |   [!]    |  |
+        |   \       /   |
+         \   '-. .-'   /
+          '-.   |   .-'
+             \  _  /
+            |  (_)  |
+             \  _  /
+              '---'
 
-    [ SHADOW DETECTOR ]
-  ]]
-  print(banner)
+      [ SHADOW IT DETECTOR ]
+  ]])
 end
 
 local baseline_path = stdnse.get_script_args("baseline") or "baseline.txt"
@@ -49,7 +48,6 @@ action = function(host, port)
   local current_entry = host.ip .. ":" .. port.number
   local found = false
 
-  -- Przeszukiwanie pliku baseline
   for line in file:lines() do
     if line:find(current_entry) then
       found = true
@@ -60,5 +58,7 @@ action = function(host, port)
 
   if not found then
     return stdnse.format_output(true, "ALERT: New service detected on port " .. port.number .. " (Not in baseline!)")
+  else
+    return "Status: Port " .. port.number .. " is authorized and matches baseline."
   end
 end
