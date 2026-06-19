@@ -23,11 +23,11 @@ A custom **Nmap Scripting Engine (NSE)** tool designed to monitor network infras
 ## Usage
   1. Generate your baseline file (the "known good" state):
   ```
-  nmap -oG baseline.txt 192.168.1.0/24
+  nmap -oG baseline.txt <TARGET-IP>
   ```
   2. Run the scanner to detect unauthorized changes:
   ```
-  nmap -p- --script shadow-it-detect.nse 192.168.1.0/24
+  nmap -p- --script shadow-it-detect.nse --script-args baseline=baseline.txt <TARGET-IP>
   ```
 
 ## License
