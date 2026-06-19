@@ -9,6 +9,30 @@ categories = {"discovery", "safe"}
 local stdnse = require "stdnse"
 local io = require "io"
 
+-- Używamy prerule, aby baner wyświetlił się tylko raz na początku skanowania
+prerule = function()
+  local banner = [[
+          .---.
+         /  _  \
+        |  (_)  |
+         \  _  /
+      .-'   |   '-.
+     /   .-' '-.   \
+    |   /       \   |
+    |  |  [!]    |  |
+    |   \       /   |
+     \   '-. .-'   /
+      '-.   |   .-'
+         \  _  /
+        |  (_)  |
+         \  _  /
+          '---'
+
+    [ SHADOW DETECTOR ]
+  ]]
+  print(banner)
+end
+
 local baseline_path = stdnse.get_script_args("baseline") or "baseline.txt"
 
 portrule = function(host, port)
